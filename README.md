@@ -1,40 +1,61 @@
-# XAMPP Configuration Files
+# XAMPP Configuration Files Backup & Custom Setups
 
-This repository contains backup and modified versions of key XAMPP configuration files. It aims to help developers and students easily switch between default, custom port, and WordPress-optimized setups.
+This repository provides a structured set of Apache and PHP configuration files for XAMPP on Windows. It includes original backups, alternative port versions (8080/8443), and performance-optimized setups for WordPress and heavy plugin usage.
 
-## 📁 Directory Structure
+## 📁 Folder Structure
 
-### php/
-- `original-php.ini`: Default `php.ini` from a clean XAMPP installation.
-- `wordpress-ready-php.ini`: Optimized for WordPress use, including:
+### `/original/`
+Contains the original configuration files from a fresh XAMPP installation:
+- `httpd.conf`
+- `httpd-ssl.conf`
+- `php.ini`
+
+### `/port-8080-8443/`
+Apache configuration files modified to use alternative ports:
+- `httpd.conf` → Port `8080` instead of `80`
+- `httpd-ssl.conf` → Port `8443` instead of `443`
+
+Use this set if port 80 is blocked (e.g., PID 4 "System" issue on Windows).
+
+### `/wordpress/`
+Optimized configuration for WordPress installations and plugins that require:
+- Higher execution time
+- Larger file upload limits
+- Increased memory
+
+Included files:
+- `php.ini` with increased limits:
   - `max_execution_time = 300`
   - `memory_limit = 512M`
   - `upload_max_filesize = 64M`
   - `post_max_size = 64M`
+  - `max_input_vars = 5000`
 
-### apache/
-- `original-httpd.conf` / `original-httpd-ssl.conf`: Default Apache configuration files.
-- `port-8080-httpd.conf`: Apache configured to listen on port 8080 instead of 80.
-- `port-8443-httpd-ssl.conf`: SSL configuration set to use port 8443.
-- `wordpress-ready-httpd.conf` / `wordpress-ready-httpd-ssl.conf`: Configuration optimized for WordPress installations with higher resource limits.
+- `httpd.conf` and `httpd-ssl.conf` preconfigured for:
+  - Ports 8080 and 8443
+  - Optional Apache tweaks for longer timeouts and larger requests
 
-## ✅ Use Cases
+## ✅ How to Use
 
-- Quickly restore original configuration after errors
-- Resolve port conflicts (e.g., PID 4 using port 80)
-- Prepare XAMPP for modern WordPress development
-- Switch easily between development modes
+1. Stop Apache from XAMPP Control Panel.
+2. Backup your current config files (if needed).
+3. Replace the config files with the ones from your desired folder.
+4. Restart XAMPP Control Panel as **Administrator**.
+5. If using the 8080 setup, access your site via:
+http://localhost:8080/
+https://localhost:8443/
 
-## 💡 Notes
+## 🧪 Verify Configuration
 
-- Always restart Apache after making changes.
-- Run XAMPP Control Panel as **Administrator** on Windows.
-- Use `http://localhost:8080/` if using the 8080 config.
+To confirm PHP settings, create a file named `info.php` in `htdocs/` with the following content:
 
-## 🧑‍💻 Author
+```php
+<?php phpinfo(); ?>
+```
 
-Maintained by [Paolo Balzano](https://www.balzanoconsulting.com) – IT Consultant and Technical Teacher.
+Then open http://localhost:8080/info.php in your browser.
 
----
+## 🙋 About
 
-> Feel free to fork or contribute improvements. This repo may be especially useful for students, educators, or developers working in constrained or shared environments.
+Maintained by [Paolo Balzano](https://balzanoconsulting.com)
+Teacher, IT Consultant, and DevOps enthusiast.
